@@ -1,0 +1,87 @@
+﻿@using AppleStore.InputModels;
+
+@model AppleStore.ViewModels.AppleViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container px-4 px-lg-5 py-lg-5">
+
+    <h2 class="my-5">Details for @Html.DisplayFor(model => model.Name) Apple</h2>
+    <hr />
+
+    <div class="d-flex">
+        <div class="col-lg-5">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd class="text-primary fw-bold">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Type)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Type)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreatedOn)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedOn)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ModifiedOn)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ModifiedOn)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd class="col-lg-10">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+
+                <dd class="col-lg-10 fw-bold text-danger">
+                    @Html.DisplayFor(model => model.Price) lv.
+                </dd>
+            </dl>
+        </div>
+
+        <div>
+            <img src=@Model.ImageUrl class="card-img-top img-fluid rounded-3 " alt=@Model.Name>
+
+            <div>
+                @Html.Label("Possible discounts:")
+
+                @foreach (var discount in Model.PossibleDiscounts)
+                {
+                    @Html.Partial("_DiscountView", discount, new ViewDataDictionary(ViewData)
+                    { new KeyValuePair<string, object>("onClickFunc", "SetCount") })
+                }
+            </div>
+        </div>
+    </div>
+    <p>
+        <i class="fas fa-arrow-left"></i>
+        @Html.ActionLink("Back to List", "Index") |
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+    </p>
+</div>

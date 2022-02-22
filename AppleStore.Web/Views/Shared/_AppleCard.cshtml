@@ -1,0 +1,18 @@
+﻿@model AppleStore.ViewModels.AppleViewModel
+
+@{ 
+    bool isAdmin = User.IsInRole("Admin");
+}
+
+<div class="card m-4 rounded-top" onclick="GetDetails('@Model.Id', 0, 0, @isAdmin)">
+    <div class="card-image-wrapper rounded-top">
+        <img src=@Model.ImageUrl class="card-img-top img-fluid rounded-top" alt=@Model.Name>
+    </div>
+            <div class="card-body @(Request.IsAuthenticated && User.IsInRole("Admin") ? "bg-secondary" : "bg-primary")">               
+                    <h5 class="card-title text-center text-white">@Model.Name</h5>
+                    <p class="card-text text-center text-info my-5">@Model.Description</p>
+                    <div class="text-white text-center price shadow-lg rounded">
+                        Price <span class="fw-bold text-danger">@Model.Price lv.</span>
+                    </div>
+                </div>
+            </div>

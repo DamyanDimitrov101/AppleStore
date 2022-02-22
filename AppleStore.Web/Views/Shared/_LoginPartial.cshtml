@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav">
+            <li class="nav-link py-lg-2 navbar-right">
+                @{
+                    if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <span class="nav-userName text-white">Administrator</span>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-userName" })
+                    }
+                }
+            <li class="nav-link py-lg-2 navbar-right text-white">
+                <a href="javascript:document.getElementById('logoutForm').submit()">
+                    @{
+                        if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <i class="fas fa-sign-out-alt logout nav-userName text-white"></i>
+                        }
+                        else
+                        {
+                            <i class="fas fa-sign-out-alt logout nav-userName text-secondary"></i>
+                        }
+                    }
+                </a>
+            </li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li class="nav-link navbar-right navbar-account">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "text-secondary" })</li>
+        <li class="nav-link navbar-right navbar-account">@Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "text-secondary" })</li>
+    </ul>
+}

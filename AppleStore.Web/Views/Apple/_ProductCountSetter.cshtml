@@ -1,0 +1,30 @@
+﻿@model AppleStore.InputModels.ProductCountSetterInputModel
+
+<div class="border-top">
+    <p>Total: <input type="number" 
+                     class="details-total-input" 
+                     disabled data-total="@Model.Price" 
+                     value="@Model.Price"/></p>
+    <input type="number" class="details-price-input" hidden data-price="@Model.Price" />
+</div>
+
+<div class="d-flex">
+    <div class="product-count d-flex">
+        @using (Html.BeginForm("Add", "Cart", FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+        {
+            @Html.AntiForgeryToken()
+        }
+
+        <button class="button-count btn-minus mx-1" disabled>-</button>
+        <input type="hidden" id="UserId" value="@Model.UserId">
+
+        <input type="hidden" id="AppleId" value="@Model.AppleId">
+
+        <input type="text" readonly class="number-product" id="Count" value="1">
+        <button class="button-count mx-1">+</button>
+    </div>
+
+    <div>
+        <button class="btn-outline-primary btn rounded-3 mx-5" id="Buy">Add To Cart</button>
+    </div>
+</div>

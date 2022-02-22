@@ -1,0 +1,104 @@
+﻿    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Apple Store</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+    
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Cart", "Index", "Cart")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Store", "Index", "Apple")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-sm bg-light" id="mainNav">
+            <div class="container px-4 px-lg-5 bg-light">
+                <a class="navbar-brand text-primary" href="/">Apple Store</a>
+                <button class="navbar-toggler text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse navbar-light" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0 navbar-right">
+
+                        <li class="nav-link px-lg-3 py-3 navbar-right">@Html.Partial("_LoginPartial")</li>
+                        <li class="nav-link px-lg-3 py-3 py-lg-4 d-flex nav-icon-wrapper">
+                            <i class="fas fa-shopping-cart nav-icon" id="link-cart" onclick="getCart()"></i>
+                            @Html.ActionLink("Cart", "Index", "Cart", null, new { @class = "p-0 m-0 text-secondary" })
+                        </li>
+                        <li class="nav-link px-lg-3 py-3 py-lg-4 d-flex nav-icon-wrapper">
+                            <i class="fas fa-info nav-icon" id="link-contacts" onclick="getContact()"></i>
+                            @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "p-0 m-0 text-secondary", onclick = "e => setActive(e)" })
+                        </li>
+                        <li class="nav-link  py-3 py-lg-4 d-flex nav-icon-wrapper">
+                            <i class="fas fa-apple-alt nav-icon" id="link-apple" onclick="getStore()"></i>
+                            @Html.ActionLink("Store", "Index", "Apple", null, new { @class = "p-0 m-0 text-secondary", onclick = "e => setActive(e)" })
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="py-lg-3">
+            <div class="py-lg-5">
+                @RenderBody()
+            </div>
+        </div>
+        <footer class="border-top">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <ul class="list-inline text-center">
+                            <li class="list-inline-item">
+                                <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="small text-center text-muted fst-italic">Copyright &copy; Apple Store 2021</div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        @Scripts.Render("~/bundles/theme")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/custom")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
+

@@ -1,0 +1,19 @@
+﻿@model AppleStore.ViewModels.DiscountsViewModel
+
+@{
+    var onClickFunc = ViewData["onClickFunc"];
+}
+
+<div class="my-4 rounded-end d-flex w-100"  onclick="@(onClickFunc)('@Model.Apple.Id', @Model.Pairs, @Model.NewPrice)">
+    <div class="rounded-end rounded-start">
+        <img src=@Model.Apple.ImageUrl class="cart-discount-img rounded-end rounded-pill" alt=@Model.Apple.Name>
+    </div>
+    <div class="bg-primary ps-2 cart-discount-content d-flex w-100 justify-content-between">
+        <div class="m-1 pt-3 text-center text-white"><span class="align-middle">@Model.Apple.Name</span></div>
+        <span class="m-0 pt-3 text-center text-light d-flex flex-column"><span>x</span><span>@Model.Pairs</span></span>
+        <div class="text-center pt-3 text-light d-flex flex-column">Old price: <span>@(Model.Apple.Price*Model.Pairs) lv.</span></div>
+        <div class="text-white px-2 pt-3 text-center shadow-lg rounded d-flex flex-column">
+            New price: <span class="fw-bold text-danger">@Model.NewPrice lv.</span>
+        </div>
+    </div>
+</div>
