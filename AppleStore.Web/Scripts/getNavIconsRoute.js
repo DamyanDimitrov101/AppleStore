@@ -12,3 +12,8 @@ function getStore() {
     document.location =
         "/Apple/";
 }
+
+function getStoreAdmin() {
+    document.location =
+        "/Admin/Store";
+}

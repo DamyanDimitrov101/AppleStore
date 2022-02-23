@@ -171,6 +171,15 @@ button:disabled {
     background-color: silver;
 }
 
+.btn:hover {
+    -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,133,161,0);
+    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,133,161,0);
+}
+
+.btn-outline-danger:disabled {
+    color: white;
+}
+
 @media all and (max-width: 990px) {
     .home-bg {
         padding-left: 0rem !important;

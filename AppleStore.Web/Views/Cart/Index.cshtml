@@ -18,21 +18,23 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.AllPurchased)
+            @foreach (var item in Model.AllPurchased.OrderByDescending(p=> p.IsPurchased))
             {
-                <tr class="row m-3 border-bottom d-lg-table-row">
-                    <td class="card-text text-black">@item.Apple.Name</td>
-                    <td class="card-text text-primary">@item.Count</td>
-                    <td class="card-text text-secondary">@item.Apple.Type</td>
-                    <td class="card-text text-secondary">@item.Apple.Price</td>
-                    <td class="card-text text-secondary">@(item.Apple.Price*item.Count)</td>
-                    <td class="card-text text-danger w-50">
+                <tr class="row m-3 border-bottom d-lg-table-row @(item.IsPurchased ? "bg-secondary" : "")">
+                    <td class="card-text rounded-start text-black @(item.IsPurchased ? "text-white" : "")">@item.Apple.Name</td>
+                    <td class="card-text text-primary @(item.IsPurchased ? "text-white" : "")">@item.Count</td>
+                    <td class="card-text text-secondary @(item.IsPurchased ? "text-white" : "")">@item.Apple.Type</td>
+                    <td class="card-text text-secondary @(item.IsPurchased ? "text-white" : "")">@item.Apple.Price</td>
+                    <td class="card-text text-secondary @(item.IsPurchased ? "text-white" : "")">@(item.Apple.Price*item.Count)</td>
+                    <td class="card-text text-danger w-50 p-0 rounded-end">
                         @using (Html.BeginForm("Delete", "Cart",
-                            FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+                            FormMethod.Post, new { id = "__AjaxAntiForgeryForm", @class = "w-100" }))
                         {
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="PurchasedApple" id="PurchasedApple" value="@item.PurchasedAppleId" />
-                            <input type="submit" class="btn-outline-danger rounded-3" value="Delete" />
+                            <input type="submit" 
+                                   class="btn-outline-danger rounded-3" @(item.IsPurchased ? "disabled " : "") 
+                                   value="@(item.IsPurchased ? "PURCHASED" : "DELETE")" />                            
                         }
                     </td>
                 </tr>
@@ -52,16 +54,27 @@
         </div>
 
         <div class="border-top text-end px-1 fw-bold text-muted">
-            <div class="m-4">After the <span class="text-info text-uppercase">discounts</span> the total price is: <h4 class="text-end mt-3 text-danger fw-bolder mx-3">@Model.Total lv.</h4></div>
+            <div class="m-4">
+                After the <span class="text-info text-uppercase">discounts</span> the total price is: 
+                <h4 class="text-end mt-3 text-danger fw-bolder mx-3">@Model.Total lv.</h4>
+            </div>
 
             @using (Html.BeginForm("Buy", "Cart", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => Model.CartId)
-                @Html.HiddenFor(model => Model.AllPurchased)
-                @Html.HiddenFor(model => Model.Total)
 
-                <button type="submit" class="fw-bold btn btn-primary rounded-pill text-uppercase">Buy Now!</button>
+                List<string> AllPurchased = Model.AllPurchased
+                    .Where(p=> !p.IsPurchased)
+                    .Select(p => p.PurchasedAppleId).ToList();
+
+                for (int i = 0; i < AllPurchased.Count; i++)
+                {
+
+                    @Html.HiddenFor(model => AllPurchased[i])
+                }
+
+                <input type="submit" class="fw-bold btn btn-primary rounded-pill text-uppercase" value="Buy Now!" />
             }
         </div>
     </div>

@@ -17,8 +17,8 @@ namespace AppleStore.Services.AutoMapperConfig
             CreateMap<Apple, AppleInputModel>();
 
             CreateMap<PurchasedApples, CartListPurchasedAppleFormModel>()
-                .ForMember(pa=> pa.PurchasedAppleId, opt => opt.MapFrom(pe => pe.Id))
-                .ForMember(a=> a.IsPurchased, opt=> opt.Ignore());
+                .ForMember(pa => pa.PurchasedAppleId, opt => opt.MapFrom(pe => pe.Id))
+                .ForMember(a => a.IsPurchased, opt => opt.MapFrom(pe => pe.IsPurchased));
 
             CreateMap<Discount, DiscountsViewModel>()
                 .ForMember(a=> a.Apple, opt=> opt.MapFrom<Apple>(a=> a.Apple));

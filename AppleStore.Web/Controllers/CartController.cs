@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 using AppleStore.InputModels;
@@ -73,13 +74,11 @@ namespace AppleStore.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Buy(CartList_All_PurchasedInputModel model)
+        public ActionResult Buy(string cartId, ICollection<string> allPurchased)
         {
-            if (!ModelState.IsValid)
-                return NotFound();
             try
             {
-                this.cartService.BuyPurchased(model);
+                this.cartService.BuyPurchased(cartId, allPurchased);
                 return RedirectToAction("Index");
             }
             catch (Exception e)

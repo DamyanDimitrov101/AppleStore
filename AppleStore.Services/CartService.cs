@@ -114,17 +114,15 @@ namespace AppleStore.Services
             this._cartRepository.SaveChanges();
         }
 
-        public void BuyPurchased(CartList_All_PurchasedInputModel model)
+        public void BuyPurchased(string cartId, ICollection<string> allPurchased)
         {
-            var cart = this._cartRepository
-                .All()
-                .FirstOrDefault(c => c.UserId == model.CartId);
+            var cart = this._cartRepository.GetById(cartId);
             ThrowExceptionIfNull(cart);
 
-            foreach (var purchase in model.AllPurchased)
+            foreach (var purchaseId in allPurchased)
             {
                 var purchasedApple = this._purchasedRepository
-                    .GetById(purchase.PurchasedAppleId);
+                    .GetById(purchaseId);
                 ThrowExceptionIfNull(purchasedApple);
 
                 purchasedApple.IsPurchased = true;
@@ -142,10 +140,14 @@ namespace AppleStore.Services
         private (decimal, ICollection<DiscountsViewModel>) GetTotal(
             List<CartListPurchasedAppleFormModel> cartListPurchasedAppleFormModels)
         {
-            var sum = cartListPurchasedAppleFormModels
+            var list = cartListPurchasedAppleFormModels
+                .Where(p => !p.IsPurchased)
+                .ToList();
+
+            var sum = list
                 .Sum(purchase => purchase.Count * purchase.Apple.Price);
 
-            var discounts = ApplyDiscounts(cartListPurchasedAppleFormModels, ref sum);
+            var discounts = ApplyDiscounts(list, ref sum);
 
             return (sum, discounts);
         }
