@@ -16,13 +16,19 @@ namespace AppleStore.Services
     {
         private readonly IAppleData _appleData;
         private readonly IRepository<PurchasedApples> _purchasedRepository;
+        private readonly IRepository<Cart> _cartRepository;
+        private readonly IRepository<ApplicationUser> _usersRepository;
 
         public AppleService(
-            IAppleData appleData, 
-            IRepository<PurchasedApples> purchasedRepository)
+            IAppleData appleData,
+            IRepository<PurchasedApples> purchasedRepository,
+            IRepository<Cart> cartRepository, 
+            IRepository<ApplicationUser> usersRepository)
         {
             this._appleData = appleData;
             this._purchasedRepository = purchasedRepository;
+            _cartRepository = cartRepository;
+            _usersRepository = usersRepository;
         }
 
         public IEnumerable<AppleViewModel> GetAll()
@@ -74,10 +80,24 @@ namespace AppleStore.Services
                 this._appleData.Edit(model);
         }
 
-        public ICollection<CartListPurchasedAppleFormModel> GetPurchased() 
-            => this._purchasedRepository
-                .AllAsNoTracking()
-                .Where(p => p.IsPurchased)
-                .MapTo<List<CartListPurchasedAppleFormModel>>();
+        public ICollection<CartListPurchasedAppleFormModel> GetPurchased()
+        {
+            var collectionPurchased =  this._purchasedRepository
+                           .AllAsNoTracking()
+                           .Where(p => p.IsPurchased)
+                           .MapTo<List<CartListPurchasedAppleFormModel>>();
+
+            foreach (var purchase in collectionPurchased)
+            {
+                purchase.Apple = this._appleData
+                    .Get(purchase.AppleId)
+                    .MapTo<AppleInputModel>();
+
+                var clientId = this._cartRepository.GetById(purchase.CartId).UserId;
+                purchase.ClientName = this._usersRepository.GetById(clientId).Email;
+            }
+
+            return collectionPurchased;
+        }
     }
 }

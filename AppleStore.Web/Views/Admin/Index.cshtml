@@ -12,8 +12,8 @@
         <thead class="text-center">
             <tr>
                 <td class="table-info text-start px-3">Name</td>
+                <td class="table-info text-start px-3">Client Email</td>
                 <td class="table-info">Count</td>
-                <td class="table-info">Type</td>
                 <td class="table-info">Single Price</td>
                 <td class="table-info">Total</td>
             </tr>
@@ -21,22 +21,22 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr class="row m-3 border-bottom d-lg-table-row">
-                    <td class="card-text text-black">@item.Apple.Name</td>
-                    <td class="card-text text-primary">@item.Count</td>
-                    <td class="card-text text-secondary">@item.Apple.Type</td>
-                    <td class="card-text text-secondary">@item.Apple.Price</td>
-                    <td class="card-text text-secondary">@(item.Apple.Price*item.Count)</td>
-                    <td class="card-text text-danger w-50">
-                        @using (Html.BeginForm("Delete", "Cart",
-                            FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="PurchasedApple" id="PurchasedApple" value="@item.PurchasedAppleId" />
-                            <input type="submit" class="btn-outline-danger rounded-3" value="Delete" />
-                        }
-                    </td>
-                </tr>
+            <tr class="row m-3 border-bottom d-lg-table-row">
+                <td class="card-text text-black">@item.Apple.Name</td>
+                <td class="card-text text-black">@item.ClientName</td>
+                <td class="card-text text-primary">@item.Count</td>
+                <td class="card-text text-secondary">@item.Apple.Price</td>
+                <td class="card-text text-secondary">@(item.Apple.Price*item.Count)</td>
+                <td class="card-text text-danger w-50">
+                    @using (Html.BeginForm("Delete", "Cart",
+                        FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="PurchasedApple" id="PurchasedApple" value="@item.PurchasedAppleId" />
+                        <input type="submit" class="btn-outline-success rounded-3" value="Complete" />
+                    }
+                </td>
+            </tr>
             }
         </tbody>
     </table>

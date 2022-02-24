@@ -14,11 +14,13 @@ namespace AppleStore.Services.AutoMapperConfig
             CreateMap<Apple, AppleViewModel>()
                 .ForMember(a=> a.CurrentUserId, opt=> opt.Ignore())
                 .ForMember(a=> a.PossibleDiscounts, opt=> opt.Ignore());
+
             CreateMap<Apple, AppleInputModel>();
 
             CreateMap<PurchasedApples, CartListPurchasedAppleFormModel>()
                 .ForMember(pa => pa.PurchasedAppleId, opt => opt.MapFrom(pe => pe.Id))
-                .ForMember(a => a.IsPurchased, opt => opt.MapFrom(pe => pe.IsPurchased));
+                .ForMember(a => a.IsPurchased, opt => opt.MapFrom(pe => pe.IsPurchased))
+                .ForMember(a => a.ClientName, opt => opt.Ignore());
 
             CreateMap<Discount, DiscountsViewModel>()
                 .ForMember(a=> a.Apple, opt=> opt.MapFrom<Apple>(a=> a.Apple));

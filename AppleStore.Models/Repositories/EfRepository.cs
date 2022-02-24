@@ -22,7 +22,7 @@ namespace AppleStore.Models.Repositories
         public virtual IQueryable<TEntity> All() => this.DbSet;
 
         public virtual IQueryable<TEntity> AllAsNoTracking() => this.DbSet.AsNoTracking();
-        
+                
         public TEntity GetById(string id) => this.DbSet.Find(id);
 
         public virtual void Add(TEntity entity) => this.DbSet.Add(entity);
