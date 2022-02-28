@@ -21,11 +21,12 @@ namespace AppleStore.Web.Controllers
 
         public ActionResult Index()
         {
-            if (!User.IsInRole(AdminRole))
+            var isAdmin = User.IsInRole(AdminRole);
+            if (!isAdmin)
                 return Redirect("/Home/");
             try
             {
-                var model = this.appleService.GetPurchased();
+                var model = this.appleService.GetPurchased(isAdmin);
                 return View(model);
             }
             catch (Exception e)

@@ -45,6 +45,7 @@ namespace AppleStore.Services
             var model = this._purchasedRepository
                     .AllAsNoTracking()
                     .Where(pa => pa.CartId == cart.Id)
+                    .Where(pa => !pa.IsCompleted)
                     .Include(pa => pa.Apple)
                     .ToList();
 
@@ -81,12 +82,20 @@ namespace AppleStore.Services
             
         }
 
-        public void Remove(string purchasedAppleId)
+        public void Remove(string purchasedAppleId, bool isAdmin)
         {
             var purchasedApple = this._purchasedRepository.GetById(purchasedAppleId);
             ThrowExceptionIfNull(purchasedApple);
 
-            this._purchasedRepository.Delete(purchasedApple);
+            if (isAdmin)
+            {
+                purchasedApple.IsCompleted = true;
+            }
+            else
+            {
+                this._purchasedRepository.Delete(purchasedApple);
+            }
+
             this._purchasedRepository.SaveChanges();
         }
 

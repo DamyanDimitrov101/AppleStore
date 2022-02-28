@@ -80,11 +80,12 @@ namespace AppleStore.Services
                 this._appleData.Edit(model);
         }
 
-        public ICollection<CartListPurchasedAppleFormModel> GetPurchased()
+        public ICollection<CartListPurchasedAppleFormModel> GetPurchased(bool isAdmin)
         {
             var collectionPurchased =  this._purchasedRepository
                            .AllAsNoTracking()
                            .Where(p => p.IsPurchased)
+                           .Where(p=> !p.IsCompleted)
                            .MapTo<List<CartListPurchasedAppleFormModel>>();
 
             foreach (var purchase in collectionPurchased)

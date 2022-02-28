@@ -7,7 +7,7 @@ namespace AppleStore.Services.Contracts
     {
         void Create(string userId);
         void AddApple(AddAppleInputModel model);
-        void Remove(string purchasedAppleId);
+        void Remove(string purchasedAppleId, bool isAdmin);
         void BuyPurchased(string cartId, ICollection<string> allPurchased);
         CartList_All_PurchasedInputModel GetAllPurchased(string userId);
     }

@@ -127,7 +127,7 @@ namespace AppleStore.Tests.ServicesTests
             if (purchasedAppleInCart is null)
                 throw new KeyNotFoundException(nameof(purchasedAppleInCart));
 
-            this.service.Remove(purchasedAppleInCart.Id);
+            this.service.Remove(purchasedAppleInCart.Id, false);
 
             this.purhcasedMockSet.Verify(m => m.Remove(It.IsAny<PurchasedApples>()), Times.Once());
             this.appleMockContext.Verify(m => m.SaveChanges(), Times.Once());
@@ -140,7 +140,7 @@ namespace AppleStore.Tests.ServicesTests
             if (purchasedAppleInCart is null)
                 throw new KeyNotFoundException(nameof(purchasedAppleInCart));
             
-            Assert.That(() => this.service.Remove(purchasedAppleInCart.Id+"test"),
+            Assert.That(() => this.service.Remove(purchasedAppleInCart.Id+"test", false),
                 Throws.InstanceOf<KeyNotFoundException>());
 
             this.purhcasedMockSet.Verify(m => m.Remove(It.IsAny<PurchasedApples>()), Times.Never());

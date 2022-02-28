@@ -115,6 +115,10 @@
     <Compile Include="Migrations\202202222309328_Add_IsPurchasedBoolToPurchasedApples_Migration.designer.cs">
       <DependentUpon>202202222309328_Add_IsPurchasedBoolToPurchasedApples_Migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202280056226_Add_IsCompletedColumn_InPurchasedApplesEntity_Migration.cs" />
+    <Compile Include="Migrations\202202280056226_Add_IsCompletedColumn_InPurchasedApplesEntity_Migration.designer.cs">
+      <DependentUpon>202202280056226_Add_IsCompletedColumn_InPurchasedApplesEntity_Migration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seeders\ApplesSeeder.cs" />
@@ -152,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202222309328_Add_IsPurchasedBoolToPurchasedApples_Migration.resx">
       <DependentUpon>202202222309328_Add_IsPurchasedBoolToPurchasedApples_Migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202280056226_Add_IsCompletedColumn_InPurchasedApplesEntity_Migration.resx">
+      <DependentUpon>202202280056226_Add_IsCompletedColumn_InPurchasedApplesEntity_Migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

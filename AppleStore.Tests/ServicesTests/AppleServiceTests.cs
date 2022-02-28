@@ -29,7 +29,9 @@ namespace AppleStore.Tests.ServicesTests
         private Mock<DbSet<Discount>> discountMockSet;
         private Mock<AppleStoreDbContext> appleMockContext;
         private EfRepository<Apple> appleEfRepository;
+        private EfRepository<Cart> cartEfRepository;
         private EfRepository<Discount> discountEfRepository;
+        private EfRepository<ApplicationUser> usersEfRepository;
         private EfRepository<PurchasedApples> purchasedEfRepository;
         private SqlAppleData data;
         private IAppleService service;
@@ -53,10 +55,12 @@ namespace AppleStore.Tests.ServicesTests
             SetupDbSets();
 
             this.appleEfRepository = new EfRepository<Apple>(this.appleMockContext.Object);
+            this.cartEfRepository = new EfRepository<Cart>(this.appleMockContext.Object);
             this.discountEfRepository = new EfRepository<Discount>(this.appleMockContext.Object);
+            this.usersEfRepository = new EfRepository<ApplicationUser>(this.appleMockContext.Object);
             this.purchasedEfRepository = new EfRepository<PurchasedApples>(this.appleMockContext.Object);
             this.data = new SqlAppleData(this.appleEfRepository, this.discountEfRepository);
-            this.service = new AppleService(this.data, purchasedEfRepository);
+            this.service = new AppleService(this.data, purchasedEfRepository, cartEfRepository, usersEfRepository);
 
             Mapper.Initialize(cfg => cfg.AddProfile<AutoMapperProfile>());
         }
@@ -161,7 +165,7 @@ namespace AppleStore.Tests.ServicesTests
         public void Edit_ShouldEditCorrectly()
         {
             var editData = new Mock<SqlAppleData>(this.appleMockContext.Object);
-            this.service = new AppleService(editData.Object, purchasedEfRepository);
+            this.service = new AppleService(editData.Object, purchasedEfRepository, cartEfRepository, usersEfRepository);
 
             var formModel = new AppleInputModel()
             {
@@ -189,7 +193,7 @@ namespace AppleStore.Tests.ServicesTests
         public void Edit_ShouldNotEdit_WithInvalidName()
         {
             var editData = new Mock<SqlAppleData>(this.appleMockContext.Object);
-            this.service = new AppleService(editData.Object, purchasedEfRepository);
+            this.service = new AppleService(editData.Object, purchasedEfRepository, cartEfRepository, usersEfRepository);
 
             var formModel = new AppleInputModel()
             {
@@ -219,7 +223,7 @@ namespace AppleStore.Tests.ServicesTests
         public void Edit_ShouldNotEdit_WithInvalidImageUrl()
         {
             var editData = new Mock<SqlAppleData>(this.appleMockContext.Object);
-            this.service = new AppleService(editData.Object, purchasedEfRepository);
+            this.service = new AppleService(editData.Object, purchasedEfRepository,cartEfRepository, usersEfRepository);
 
             var formModel = new AppleInputModel()
             {

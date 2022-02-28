@@ -16,6 +16,7 @@ namespace AppleStore.Models
         public Apple Apple { get; set; }
 
         public bool IsPurchased { get; set; }
+        public bool IsCompleted { get; set; }
 
         [Required]
         public string CartId { get; set; }

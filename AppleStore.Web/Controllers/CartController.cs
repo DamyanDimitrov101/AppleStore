@@ -6,6 +6,8 @@ using AppleStore.InputModels;
 using AppleStore.Services.Contracts;
 using Microsoft.AspNet.Identity;
 
+using static AppleStore.Common.GlobalConstants.UserRolesConstants;
+
 namespace AppleStore.Web.Controllers
 {
     [Authorize]
@@ -61,8 +63,13 @@ namespace AppleStore.Web.Controllers
         {
             try
             {
+                var isAdmin = User.IsInRole(AdminRole);
                 var purchasedAppleId = Request.Form.Get("PurchasedApple");
-                this.cartService.Remove(purchasedAppleId);
+                this.cartService.Remove(purchasedAppleId, isAdmin);
+
+                if(isAdmin)
+                return RedirectToAction("Index", "Admin");
+
                 return RedirectToAction("Index");
             }
             catch (Exception e)

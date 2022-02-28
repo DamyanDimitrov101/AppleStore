@@ -17,6 +17,6 @@ namespace AppleStore.Services.Contracts
 
         void Edit(IAppleInputModel model);
         
-        ICollection<CartListPurchasedAppleFormModel> GetPurchased();
+        ICollection<CartListPurchasedAppleFormModel> GetPurchased(bool isAdmin);
     }
 }
